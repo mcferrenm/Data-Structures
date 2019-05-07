@@ -52,6 +52,7 @@ class DoublyLinkedList:
         return self.length
 
     def add_to_head(self, value):
+        # `add_to_head` replaces the head of the list with a new value that is passed in.
         pass
 
     def remove_from_head(self):
@@ -61,17 +62,24 @@ class DoublyLinkedList:
             return None
         # 2. What if our linked list has 1 node?
         elif self.head == self.tail:
+            current_head = self.head
             self.head = None
             self.tail = None
             self.length -= 1
+            return current_head.value
         # 3. What if our linked list has 2 or more nodes?
         else:
-            self.head = self.head.next
+            current_head = self.head
             self.head.delete()
+            self.head = self.head.next
             self.length -= 1
+            return current_head.value
 
     def add_to_tail(self, value):
         # add_to_tail replaces the tail of the list with a new value that is passed in
+
+        # do we need to create a node here or can we use insert after/before on an empty list?
+
         new_node = ListNode(value)
         # 1. What is our linked list is empty?
         if not self.head and not self.tail:
@@ -80,8 +88,8 @@ class DoublyLinkedList:
             self.length += 1
         # 2. What if our linked list is not empty?
         else:
-            self.tail.insert_after(new_node)
-            self.tail = new_node
+            self.tail.insert_after(value)
+            # self.tail = new_node
             self.length += 1
 
     def remove_from_tail(self):
@@ -109,5 +117,5 @@ class DoublyLinkedList:
 ll = DoublyLinkedList()
 
 ll.add_to_tail(5)
-ll.remove_from_head()
+print(ll.remove_from_head())
 print(ll.__len__())
