@@ -17,7 +17,7 @@ class ListNode:
         self.next = ListNode(value, self, current_next)
         if current_next:
             current_next.prev = self.next
-
+        return self.next
     """Wrap the given value in a ListNode and insert it
   before this node. Note that this node could already
   have a previous node it is point to."""
@@ -27,7 +27,7 @@ class ListNode:
         self.prev = ListNode(value, current_prev, self)
         if current_prev:
             current_prev.next = self.prev
-
+        return self.prev
     """Rearranges this ListNode's previous and next pointers
   accordingly, effectively deleting this ListNode."""
 
@@ -53,7 +53,17 @@ class DoublyLinkedList:
 
     def add_to_head(self, value):
         # `add_to_head` replaces the head of the list with a new value that is passed in.
-        pass
+        # 1. What if our list is empty?
+        new_node = ListNode(value)
+
+        if not self.head and not self.tail:
+            self.head = new_node
+            self.tail = new_node
+            self.length += 1
+        # 2. What if our list is not empty?
+        else:
+            self.head = self.head.insert_before(value)
+            self.length += 1
 
     def remove_from_head(self):
         # remove_from_head removes the head node and returns the value stored in it.
@@ -88,7 +98,8 @@ class DoublyLinkedList:
             self.length += 1
         # 2. What if our linked list is not empty?
         else:
-            self.tail.insert_after(value)
+            self.tail = self.tail.insert_after(value)
+            # how do we get a reference to the node created in insert_after?
             # self.tail = new_node
             self.length += 1
 
@@ -116,6 +127,13 @@ class DoublyLinkedList:
 
 ll = DoublyLinkedList()
 
-ll.add_to_tail(5)
-print(ll.remove_from_head())
-print(ll.__len__())
+# print(ll.tail.value)
+
+ll.add_to_head(5)
+ll.add_to_head(10)
+print(ll.head.value, ll.tail.value)
+ll.add_to_tail(7)
+ll.remove_from_head()
+print(ll.head.value, ll.tail.value)
+
+# print(ll.__len__())
