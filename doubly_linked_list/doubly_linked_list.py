@@ -47,6 +47,7 @@ class DoublyLinkedList:
         self.head = node
         self.tail = node
         self.length = 1 if node is not None else 0
+        self.max = node if node else None
 
     def __len__(self):
         return self.length
@@ -125,6 +126,8 @@ class DoublyLinkedList:
             return current_tail.value
 
     def move_to_front(self, node):
+        # move_to_front takes a reference to a node in the list and moves it to the
+        # front of the list, shifting all other list nodes down.
         if not self.head and not self.tail:
             return None
         elif self.head == self.tail:
@@ -137,6 +140,8 @@ class DoublyLinkedList:
                 self.tail = node.prev
 
     def move_to_end(self, node):
+        # move_to_end takes a reference to a node in the list and moves it to the
+        # end of the list, shifting all other list nodes up.
         if not self.head and not self.tail:
             return None
         elif self.head == self.tail:
@@ -149,7 +154,8 @@ class DoublyLinkedList:
                 self.head = node.next
 
     def delete(self, node):
-
+        # delete takes a reference to a node in the list and removes it from the list.
+        #  The deleted node's previous and next pointers should point to each afterwards.
         if not self.head and not self.tail:
             return None
         # 2. What if our linked list has 1 node?
@@ -169,37 +175,31 @@ class DoublyLinkedList:
                 self.tail = node.prev
 
     def get_max(self):
-        pass
+        # get_max returns the maximum value in the list.
+        # do we use a max_value property? and update it on every add or remove? do we store the node or value?
+        #
+        if not self.head and not self.tail:
+            return None
+        # 2. What if our linked list has 1 node?
+        elif self.head == self.tail:
+            return self.max.value
+        # 3. What if our linked list has 2 or more nodes?
+        else:
+            current_node = self.head
+            for _ in range(self.length):
+                if current_node.value > self.max.value:
+                    self.max = current_node
+                current_node = current_node.next
+            return self.max.value
 
 
-# move_to_front takes a reference to a node in the list and moves it to the
-# front of the list, shifting all other list nodes down.
+node = ListNode(1)
+ll = DoublyLinkedList(node)
 
-# move_to_end takes a reference to a node in the list and moves it to the
-# end of the list, shifting all other list nodes up.
-
-# delete takes a reference to a node in the list and removes it from the list.
-#  The deleted node's previous and next pointers should point to each afterwards.
-
-# get_max returns the maximum value in the list.
-
-
-ll = DoublyLinkedList()
-
-ll.add_to_tail(1)
-print(ll.__len__())
-ll.add_to_tail(9)
-print(ll.__len__())
-ll.add_to_tail(6)
-print(ll.__len__())
-
-# ll.delete(ll.head)
-
-
-# ll.delete(ll.head)
-
-print(ll.head.value, ll.head.next.value, ll.tail.value)
-print(ll.__len__())
+ll.add_to_tail(100)
+print(ll.head.value, ll.tail.value)
+print(ll.get_max())
+# print(ll.__len__())
 
 # ll.delete(ll.head)
 # print(ll.head.value, ll.tail.value)
