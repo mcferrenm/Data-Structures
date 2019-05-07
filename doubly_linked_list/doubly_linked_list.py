@@ -104,6 +104,8 @@ class DoublyLinkedList:
             self.length += 1
 
     def remove_from_tail(self):
+        # remove_from_tail removes the tail node and returns the value stored in it.
+
         # 1. What if our linked list is empty?
         if not self.head and not self.tail:
             return None
@@ -123,36 +125,81 @@ class DoublyLinkedList:
             return current_tail.value
 
     def move_to_front(self, node):
-        pass
+        if not self.head and not self.tail:
+            return None
+        elif self.head == self.tail:
+            pass
+        else:
+            self.delete(node)
+            # can this be done without creating a new node? keeping the reference?
+            self.add_to_head(node.value)
+            if node == self.tail:
+                self.tail = node.prev
 
     def move_to_end(self, node):
-        pass
+        if not self.head and not self.tail:
+            return None
+        elif self.head == self.tail:
+            pass
+        else:
+            self.delete(node)
+            # can this be done without creating a new node? keeping the reference?
+            self.add_to_tail(node.value)
+            if node == self.head:
+                self.head = node.next
 
     def delete(self, node):
-        pass
+
+        if not self.head and not self.tail:
+            return None
+        # 2. What if our linked list has 1 node?
+        elif self.head == self.tail:
+            self.head = None
+            self.tail = None
+            self.length = 0
+        # 3. What if our linked list has 2 or more nodes?
+        else:
+            node.delete()
+            self.length -= 1
+
+            if node == self.head:
+                self.head = node.next
+
+            if node == self.tail:
+                self.tail = node.prev
 
     def get_max(self):
         pass
 
-# remove_from_tail removes the tail node and returns the value stored in it.
-# move_to_front takes a reference to a node in the list and moves it to the front of the list, shifting all other list nodes down.
-# move_to_end takes a reference to a node in the list and moves it to the end of the list, shifting all other list nodes up.
-# delete takes a reference to a node in the list and removes it from the list. The deleted node's previous and next pointers should point to each afterwards.
+
+# move_to_front takes a reference to a node in the list and moves it to the
+# front of the list, shifting all other list nodes down.
+
+# move_to_end takes a reference to a node in the list and moves it to the
+# end of the list, shifting all other list nodes up.
+
+# delete takes a reference to a node in the list and removes it from the list.
+#  The deleted node's previous and next pointers should point to each afterwards.
+
 # get_max returns the maximum value in the list.
 
 
 ll = DoublyLinkedList()
 
-# print(ll.tail.value)
+ll.add_to_tail(1)
+print(ll.__len__())
+ll.add_to_tail(9)
+print(ll.__len__())
+ll.add_to_tail(6)
+print(ll.__len__())
 
-ll.add_to_head(5)
-ll.add_to_head(10)
-print(ll.head.value, ll.tail.value)
-ll.add_to_tail(7)
-ll.add_to_tail(3)
-ll.remove_from_head()
-print(ll.head.value, ll.tail.value)
-ll.remove_from_tail()
-print(ll.head.value, ll.tail.value)
+# ll.delete(ll.head)
 
-# print(ll.__len__())
+
+# ll.delete(ll.head)
+
+print(ll.head.value, ll.head.next.value, ll.tail.value)
+print(ll.__len__())
+
+# ll.delete(ll.head)
+# print(ll.head.value, ll.tail.value)
