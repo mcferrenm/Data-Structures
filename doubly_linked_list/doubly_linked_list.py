@@ -75,7 +75,7 @@ class DoublyLinkedList:
             current_head = self.head
             self.head = None
             self.tail = None
-            self.length -= 1
+            self.length = 0
             return current_head.value
         # 3. What if our linked list has 2 or more nodes?
         else:
@@ -104,7 +104,23 @@ class DoublyLinkedList:
             self.length += 1
 
     def remove_from_tail(self):
-        pass
+        # 1. What if our linked list is empty?
+        if not self.head and not self.tail:
+            return None
+        # 2. What if our linked list has 1 node?
+        elif self.head == self.tail:
+            current_tail = self.tail
+            self.head = None
+            self.tail = None
+            self.length = 0
+            return current_tail.value
+        # 3. What if our linked list has 2 or more nodes?
+        else:
+            current_tail = self.tail
+            self.tail.delete()
+            self.tail = self.tail.prev
+            self.length -= 1
+            return current_tail.value
 
     def move_to_front(self, node):
         pass
@@ -133,7 +149,10 @@ ll.add_to_head(5)
 ll.add_to_head(10)
 print(ll.head.value, ll.tail.value)
 ll.add_to_tail(7)
+ll.add_to_tail(3)
 ll.remove_from_head()
+print(ll.head.value, ll.tail.value)
+ll.remove_from_tail()
 print(ll.head.value, ll.tail.value)
 
 # print(ll.__len__())
