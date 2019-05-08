@@ -1,3 +1,6 @@
+import random
+
+
 class BinarySearchTree:
     def __init__(self, value):
         self.value = value
@@ -43,11 +46,12 @@ class BinarySearchTree:
             return self.right.get_max()
 
     def for_each(self, cb):
-        pass
+        if not self.value:
+            pass
+        else:
+            cb(self.value)
 
-
-bst = BinarySearchTree(5)
-bst.insert(30)
-bst.insert(300)
-bst.insert(3)
-print(bst.get_max())
+            if self.left:
+                self.left.for_each(cb)
+            if self.right:
+                self.right.for_each(cb)
